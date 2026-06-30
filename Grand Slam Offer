@@ -1,0 +1,406 @@
+import { useState } from "react";
+
+const c = {
+  bg: "#F7F4EF",
+  card: "#FFFFFF",
+  deep: "#1A1612",
+  mid: "#5C5448",
+  muted: "#9C9188",
+  border: "#E2DAD0",
+  accent: "#C4622D",
+  accentLight: "#F5EAE2",
+  accentDark: "#9E4E24",
+  green: "#4A7A5C",
+  greenLight: "#EBF4EE",
+};
+
+const sections = [
+  {
+    id: "you",
+    title: "Let's Start With You",
+    subtitle: "Before we talk about the business, we need to understand your story. This is where your content and your offer will come from.",
+    emoji: "👤",
+    questions: [
+      { id: "name", label: "What's your name?", type: "text", placeholder: "First and last name", tip: null },
+      { id: "background", label: "What's your current or most recent job/career?", type: "text", placeholder: "e.g. Electrician, Nurse, Firefighter, Stay-at-home parent...", tip: "Don't overthink this. Whatever you do or did — that's your story and your credibility." },
+      { id: "years", label: "How long have you been doing it?", type: "text", placeholder: "e.g. 8 years, just finished my apprenticeship, 15 years...", tip: null },
+      { id: "why_left", label: "What made you open to building something different?", type: "textarea", placeholder: "Be honest. Was it the hours? The income ceiling? A life event? Wanting more time? There's no wrong answer here.", tip: "This becomes one of your most powerful pieces of content. The more honest you are, the more people will relate." },
+      { id: "travel_life", label: "What does your ideal life actually look like?", type: "textarea", placeholder: "Where are you? What are you doing? Who are you with? What does a Tuesday morning look like?", tip: "Not the 'right' answer — your real answer. This is your vision and it drives everything." },
+    ],
+  },
+  {
+    id: "audience",
+    title: "Who Do You Want to Help?",
+    subtitle: "The best businesses are built by people who speak directly to someone they understand. You don't need to help everyone — just the right people.",
+    emoji: "🎯",
+    questions: [
+      { id: "audience_who", label: "Who do you naturally want to help?", type: "textarea", placeholder: "Think about people in your world — your old workmates, your friends, people in your industry. Who do you look at and think 'I could help them'?", tip: "It's usually people who remind you of who you were before you found this." },
+      { id: "audience_problem", label: "What's the biggest problem they have that you now understand?", type: "textarea", placeholder: "e.g. They're working long hours with no way out. They feel stuck. They want more time with their kids but don't know how to earn differently.", tip: "Speak to the feeling, not just the circumstance. People buy solutions to feelings." },
+      { id: "audience_belief", label: "What belief is holding them back?", type: "textarea", placeholder: "e.g. 'I'm not techy enough.' 'I'd have to quit my job first.' 'This sounds like a pyramid scheme.' 'People like me don't do stuff like this.'", tip: "This is gold for your content. The belief you bust will be your most-watched videos." },
+      { id: "audience_dream", label: "What do they actually want more than anything?", type: "textarea", placeholder: "e.g. To not need an alarm. To be at every school pickup. To stop trading every hour for a dollar. To travel. To build something for their family.", tip: "Say this back to them in your content and they'll feel like you read their mind." },
+    ],
+  },
+  {
+    id: "offer",
+    title: "Your Grand Slam Offer",
+    subtitle: "Now we build what you actually offer people. With Enagic, the product is the vehicle — but what you're really selling is the transformation and the mentorship.",
+    emoji: "💎",
+    questions: [
+      { id: "core_promise", label: "What is the core promise you make to someone who joins your team?", type: "textarea", placeholder: "Complete this sentence: 'I will help you _______ so that you can _______.' Keep it simple and honest.", tip: "Example: 'I will help you build an income through Enagic so that you can create a life that isn't defined by a roster or a boss.'" },
+      { id: "what_you_give", label: "What do you actually give them when they join? List everything.", type: "textarea", placeholder: "e.g. One-on-one mentorship, weekly team calls, help with their first sale, content coaching, product training, someone to answer their questions...", tip: "Don't undervalue what you offer. Mentorship, time, and access to someone who's figured it out is genuinely valuable." },
+      { id: "your_story_proof", label: "What's your proof that this works? (Your results so far)", type: "textarea", placeholder: "e.g. First commission, leaving a job, travelling, income milestone, a customer whose life changed with the water...", tip: "You don't need to be 12 months in. Even your first result is proof. Be real about where you're at." },
+      { id: "unique_angle", label: "What makes YOUR mentorship different from anyone else in this business?", type: "textarea", placeholder: "Is it your background? Your personality? The way you communicate? The community you're building? Your own journey?", tip: "People join people, not businesses. What makes you specifically the right guide for your audience?" },
+      { id: "guarantee", label: "What commitment do you make to your team members if they're doing the work but struggling?", type: "textarea", placeholder: "e.g. I'll personally jump on a call with them. I'll review their content. I'll troubleshoot with them until we figure out what's not working.", tip: "A commitment like this removes fear. It shows you're not just going to take their money and disappear." },
+    ],
+  },
+  {
+    id: "content",
+    title: "Your Content Foundation",
+    subtitle: "Your content is how people find you and decide to trust you. These answers will shape everything you post.",
+    emoji: "📱",
+    questions: [
+      { id: "origin_moment", label: "What was the moment you decided to go all in on this?", type: "textarea", placeholder: "A specific moment, conversation, or realisation. The more specific the better — dates, amounts, feelings.", tip: "This is your most powerful reel. 'The moment I got our first $X cheque...' or 'The day she worked her last shift...' — that's a story." },
+      { id: "doubts_faced", label: "What doubts or judgement did you face when you started?", type: "textarea", placeholder: "Family? Friends? Colleagues? Your own head? What did people say or think?", tip: "Every person your audience respects who faced the same doubt and kept going is powerful. This is your relatability." },
+      { id: "platforms", label: "Where will you show up? (Social media platforms)", type: "text", placeholder: "e.g. Instagram, TikTok, Facebook — or just Instagram for now", tip: "Start with one and do it well. You can expand later." },
+      { id: "content_comfort", label: "What kind of content are you most comfortable creating?", type: "checkbox", options: ["Talking to camera (Reels)", "Behind the scenes / Day in the life", "Educational explainers", "Raw personal stories", "Lifestyle / travel content", "Testimonials from customers", "Text-based posts"], tip: "Be honest — you'll stick with what feels natural." },
+      { id: "one_sentence", label: "Sum up your brand in one sentence. (Don't overthink it — just write something honest.)", type: "textarea", placeholder: "e.g. 'A nurse who found a way to earn without a roster, now helping others do the same.' Or 'A tradie building a life on my own terms through online income.'", tip: "This doesn't have to be perfect. We'll refine it when you take this to Claude." },
+    ],
+  },
+];
+
+const claudeSteps = [
+  {
+    step: 1,
+    title: "Go to claude.ai",
+    detail: "Open claude.ai on your phone or computer. You don't need a paid account to start — the free version works fine.",
+    icon: "🌐",
+  },
+  {
+    step: 2,
+    title: "Start a new chat and introduce yourself",
+    detail: "Copy and paste the message below as your very first message to Claude. This sets the context for everything that follows.",
+    icon: "👋",
+    prompt: `Hi Claude! I'm building an Enagic affiliate marketing business and I want your help creating a content system and personal brand strategy tailored specifically to me.
+
+I'm going to paste in my Grand Slam Offer summary in a moment. Before I do, I want you to understand the business model: Enagic sells Kangen water machines (medical-grade water ionisers ranging from $4K-$8K). As an affiliate, I earn commissions when I help someone purchase a machine. What makes this different is that I also mentor my customers — helping them build their own business if they choose to, just like my mentor did for me.
+
+My goal is to build a personal brand on [YOUR PLATFORM/S] that attracts the right people, tells my story, and leads them to DM me. I want help with: my content pillars, a weekly posting framework, reel scripts written in my voice, caption templates, and a 30 day content plan.
+
+Ready for my offer summary?`,
+  },
+  {
+    step: 3,
+    title: "Paste your Grand Slam Offer summary",
+    detail: "After Claude replies, paste in the full summary that was generated at the end of this questionnaire. Claude will use it to understand your story, your audience, and what makes you unique.",
+    icon: "📋",
+  },
+  {
+    step: 4,
+    title: "Tell Claude about your life and setup",
+    detail: "Share the details that make your story visual and specific — where you live or travel, your job or former job, your setup (car, home, workspace), and any results you've had so far. The more specific you are, the better your content will be.",
+    icon: "🗺️",
+    prompt: `Here's some context about my life and setup that will help make my content specific and visual:
+
+- My background: [YOUR JOB / CAREER]
+- My story: [1-2 sentences on why you started this]
+- Where I'm based / how I live: [home, travelling, city, regional, etc.]
+- My best result so far: [first commission, income milestone, lifestyle change]
+- The doubts I faced: [what people said or thought when you started]
+- My partner / family situation: [optional but powerful if relevant]
+
+Please use all of this to build me a content system that feels completely specific to my life — not generic online business content.`,
+  },
+  {
+    step: 5,
+    title: "Ask for your content system",
+    detail: "Once Claude has your offer and your context, ask it to build your full content system. Use the prompt below or adapt it.",
+    icon: "🚀",
+    prompt: `Based on everything I've shared, please build me:
+
+1. My 5 core content pillars with a description and content ideas for each
+2. A weekly posting framework (which days, what themes, what type of content)
+3. At least 5 full reel scripts written in my voice with scene-by-scene direction
+4. 3 caption templates for my most important content types
+5. A 30 day content plan with specific reel and story ideas for each day
+
+Please make everything specific to MY story, MY audience, and MY background — not generic. And write it all in a tone that feels natural for someone like me to say out loud.`,
+  },
+  {
+    step: 6,
+    title: "Save it and keep building",
+    detail: "Once Claude generates your system, ask it to save the key details to its memory so every future chat picks up where you left off. You can then come back anytime to get new scripts, refine your offer, or build out new parts of your business.",
+    icon: "💾",
+    prompt: `Please save everything important about me to your memory so our future chats don't start from scratch. Save my name, my background, my business, my content strategy, my audience, my platforms, and any key results or story details I've shared.`,
+  },
+];
+
+function ProgressBar({ current, total }) {
+  return (
+    <div style={{ background: c.border, borderRadius: "99px", height: "6px", margin: "1rem 0 0.5rem" }}>
+      <div style={{ background: c.accent, borderRadius: "99px", height: "6px", width: `${(current / total) * 100}%`, transition: "width 0.4s ease" }} />
+    </div>
+  );
+}
+
+function CheckboxGroup({ options, value = [], onChange, tip }) {
+  const toggle = (opt) => {
+    const next = value.includes(opt) ? value.filter(v => v !== opt) : [...value, opt];
+    onChange(next);
+  };
+  return (
+    <div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        {options.map(opt => (
+          <button key={opt} onClick={() => toggle(opt)}
+            style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.65rem 0.85rem", borderRadius: "8px", border: `1.5px solid ${value.includes(opt) ? c.accent : c.border}`, background: value.includes(opt) ? c.accentLight : "#fff", cursor: "pointer", textAlign: "left", transition: "all 0.15s" }}>
+            <div style={{ width: "18px", height: "18px", borderRadius: "4px", border: `2px solid ${value.includes(opt) ? c.accent : c.border}`, background: value.includes(opt) ? c.accent : "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              {value.includes(opt) && <span style={{ color: "#fff", fontSize: "11px", fontWeight: "700" }}>✓</span>}
+            </div>
+            <span style={{ fontFamily: "sans-serif", fontSize: "0.85rem", color: value.includes(opt) ? c.accent : c.deep }}>{opt}</span>
+          </button>
+        ))}
+      </div>
+      {tip && <p style={{ fontFamily: "sans-serif", fontSize: "0.75rem", color: c.muted, marginTop: "0.5rem", fontStyle: "italic" }}>💡 {tip}</p>}
+    </div>
+  );
+}
+
+function Question({ q, value, onChange }) {
+  return (
+    <div style={{ marginBottom: "1.75rem" }}>
+      <label style={{ display: "block", fontFamily: "sans-serif", fontWeight: "600", fontSize: "0.9rem", color: c.deep, marginBottom: "0.4rem", lineHeight: "1.4" }}>{q.label}</label>
+      {q.tip && <p style={{ fontFamily: "sans-serif", fontSize: "0.75rem", color: c.muted, marginBottom: "0.5rem", fontStyle: "italic", lineHeight: "1.5" }}>💡 {q.tip}</p>}
+      {q.type === "text" && (
+        <input value={value || ""} onChange={e => onChange(e.target.value)} placeholder={q.placeholder}
+          style={{ width: "100%", padding: "0.7rem 0.85rem", borderRadius: "8px", border: `1.5px solid ${value ? c.accent : c.border}`, fontFamily: "sans-serif", fontSize: "0.88rem", color: c.deep, outline: "none", boxSizing: "border-box", background: "#fff", transition: "border-color 0.15s" }} />
+      )}
+      {q.type === "textarea" && (
+        <textarea value={value || ""} onChange={e => onChange(e.target.value)} placeholder={q.placeholder} rows={4}
+          style={{ width: "100%", padding: "0.7rem 0.85rem", borderRadius: "8px", border: `1.5px solid ${value ? c.accent : c.border}`, fontFamily: "sans-serif", fontSize: "0.88rem", color: c.deep, outline: "none", boxSizing: "border-box", resize: "vertical", background: "#fff", lineHeight: "1.6", transition: "border-color 0.15s" }} />
+      )}
+      {q.type === "checkbox" && (
+        <CheckboxGroup options={q.options} value={value || []} onChange={onChange} tip={q.tip} />
+      )}
+    </div>
+  );
+}
+
+function generateSummary(answers) {
+  const get = (id) => {
+    const val = answers[id];
+    if (Array.isArray(val)) return val.join(", ");
+    return val || "[not answered]";
+  };
+
+  return `GRAND SLAM OFFER SUMMARY
+========================
+
+WHO I AM
+Name: ${get("name")}
+Background: ${get("background")} (${get("years")})
+Why I opened up to something different: ${get("why_left")}
+My ideal life: ${get("travel_life")}
+
+MY AUDIENCE
+Who I want to help: ${get("audience_who")}
+Their biggest problem: ${get("audience_problem")}
+The belief holding them back: ${get("audience_belief")}
+What they actually want: ${get("audience_dream")}
+
+MY OFFER
+Core promise: ${get("core_promise")}
+What I give them: ${get("what_you_give")}
+My proof it works: ${get("your_story_proof")}
+What makes my mentorship different: ${get("unique_angle")}
+My commitment if they're struggling: ${get("guarantee")}
+
+MY CONTENT FOUNDATION
+The moment I went all in: ${get("origin_moment")}
+Doubts and judgement I faced: ${get("doubts_faced")}
+Where I'll show up: ${get("platforms")}
+Content I'm most comfortable with: ${get("content_comfort")}
+My brand in one sentence: ${get("one_sentence")}`;
+}
+
+export default function GrandSlamQuestionnaire() {
+  const [currentSection, setCurrentSection] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [showSummary, setShowSummary] = useState(false);
+  const [showClaudeSteps, setShowClaudeSteps] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [copiedPrompt, setCopiedPrompt] = useState(null);
+
+  const totalSections = sections.length;
+  const section = sections[currentSection];
+
+  const setAnswer = (id, val) => setAnswers(prev => ({ ...prev, [id]: val }));
+
+  const sectionComplete = (sec) => sec.questions.every(q => {
+    const v = answers[q.id];
+    if (q.type === "checkbox") return v && v.length > 0;
+    return v && v.trim && v.trim().length > 0;
+  });
+
+  const allComplete = sections.every(sectionComplete);
+
+  const copyText = (text, key) => {
+    navigator.clipboard.writeText(text).then(() => {
+      if (key === "summary") { setCopied(true); setTimeout(() => setCopied(false), 2000); }
+      else { setCopiedPrompt(key); setTimeout(() => setCopiedPrompt(null), 2000); }
+    });
+  };
+
+  const summary = generateSummary(answers);
+
+  if (showClaudeSteps) {
+    return (
+      <div style={{ fontFamily: "Georgia, serif", background: c.bg, minHeight: "100vh" }}>
+        <div style={{ background: c.deep, padding: "1.5rem", textAlign: "center" }}>
+          <button onClick={() => setShowClaudeSteps(false)} style={{ background: "transparent", border: "none", color: c.muted, cursor: "pointer", fontFamily: "sans-serif", fontSize: "0.8rem", marginBottom: "0.75rem", display: "block", margin: "0 auto 0.75rem" }}>← Back to summary</button>
+          <div style={{ fontSize: "0.7rem", letterSpacing: "0.2em", color: c.accent, textTransform: "uppercase", fontFamily: "sans-serif", marginBottom: "0.4rem" }}>Step by Step</div>
+          <h1 style={{ color: "#fff", fontSize: "1.5rem", margin: "0 0 0.3rem" }}>How to Use Claude</h1>
+          <p style={{ color: c.muted, fontFamily: "sans-serif", fontSize: "0.82rem", margin: 0 }}>Follow these steps to build your full content system</p>
+        </div>
+        <div style={{ padding: "1.5rem", maxWidth: "680px", margin: "0 auto" }}>
+          {claudeSteps.map((step, i) => (
+            <div key={i} style={{ background: c.card, borderRadius: "12px", marginBottom: "1rem", overflow: "hidden", border: `1px solid ${c.border}` }}>
+              <div style={{ padding: "1rem", borderBottom: step.prompt ? `1px solid ${c.border}` : "none" }}>
+                <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                  <div style={{ background: c.accent, color: "#fff", borderRadius: "8px", width: "36px", height: "36px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem", flexShrink: 0 }}>{step.icon}</div>
+                  <div>
+                    <div style={{ fontFamily: "sans-serif", fontWeight: "700", color: c.deep, marginBottom: "0.25rem" }}>Step {step.step}: {step.title}</div>
+                    <div style={{ fontFamily: "sans-serif", fontSize: "0.83rem", color: c.mid, lineHeight: "1.6" }}>{step.detail}</div>
+                  </div>
+                </div>
+              </div>
+              {step.prompt && (
+                <div style={{ padding: "1rem", background: "#FAFAFA" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                    <span style={{ fontFamily: "sans-serif", fontSize: "0.7rem", color: c.muted, textTransform: "uppercase", letterSpacing: "0.1em" }}>Copy this prompt</span>
+                    <button onClick={() => copyText(step.prompt, i)}
+                      style={{ background: copiedPrompt === i ? c.green : c.accent, color: "#fff", border: "none", borderRadius: "6px", padding: "0.3rem 0.75rem", fontFamily: "sans-serif", fontSize: "0.75rem", fontWeight: "600", cursor: "pointer" }}>
+                      {copiedPrompt === i ? "Copied ✓" : "Copy"}
+                    </button>
+                  </div>
+                  <div style={{ background: "#fff", borderRadius: "8px", padding: "0.85rem", border: `1px solid ${c.border}`, fontFamily: "sans-serif", fontSize: "0.8rem", color: c.mid, lineHeight: "1.7", whiteSpace: "pre-wrap" }}>
+                    {step.prompt}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+          <div style={{ background: c.accentLight, borderRadius: "12px", padding: "1.25rem", border: `1px solid ${c.accent}44`, textAlign: "center" }}>
+            <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>🙌</div>
+            <div style={{ fontFamily: "sans-serif", fontWeight: "700", color: c.deep, marginBottom: "0.4rem" }}>That's it. You're ready.</div>
+            <div style={{ fontFamily: "sans-serif", fontSize: "0.83rem", color: c.mid, lineHeight: "1.6" }}>Claude will take everything you've shared and build a content system tailored specifically to you. Come back to it anytime — the more you use it, the better it gets.</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (showSummary) {
+    return (
+      <div style={{ fontFamily: "Georgia, serif", background: c.bg, minHeight: "100vh" }}>
+        <div style={{ background: c.deep, padding: "1.5rem", textAlign: "center" }}>
+          <div style={{ fontSize: "0.7rem", letterSpacing: "0.2em", color: c.accent, textTransform: "uppercase", fontFamily: "sans-serif", marginBottom: "0.4rem" }}>All done</div>
+          <h1 style={{ color: "#fff", fontSize: "1.6rem", margin: "0 0 0.3rem" }}>Your Grand Slam Offer</h1>
+          <p style={{ color: c.muted, fontFamily: "sans-serif", fontSize: "0.82rem", margin: 0 }}>Copy this and take it to Claude to build your content system</p>
+        </div>
+        <div style={{ padding: "1.5rem", maxWidth: "680px", margin: "0 auto" }}>
+          <div style={{ background: c.card, borderRadius: "12px", padding: "1.25rem", marginBottom: "1rem", border: `1px solid ${c.border}` }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+              <span style={{ fontFamily: "sans-serif", fontWeight: "700", color: c.deep, fontSize: "0.9rem" }}>Your summary</span>
+              <button onClick={() => copyText(summary, "summary")}
+                style={{ background: copied ? c.green : c.accent, color: "#fff", border: "none", borderRadius: "8px", padding: "0.5rem 1rem", fontFamily: "sans-serif", fontSize: "0.8rem", fontWeight: "700", cursor: "pointer", transition: "background 0.2s" }}>
+                {copied ? "Copied ✓" : "Copy all"}
+              </button>
+            </div>
+            <pre style={{ fontFamily: "sans-serif", fontSize: "0.78rem", color: c.mid, lineHeight: "1.8", whiteSpace: "pre-wrap", margin: 0, background: "#FAFAFA", padding: "1rem", borderRadius: "8px", border: `1px solid ${c.border}` }}>
+              {summary}
+            </pre>
+          </div>
+          <button onClick={() => setShowClaudeSteps(true)}
+            style={{ width: "100%", background: c.accent, color: "#fff", border: "none", borderRadius: "12px", padding: "1.1rem", fontFamily: "sans-serif", fontSize: "1rem", fontWeight: "700", cursor: "pointer", marginBottom: "0.75rem" }}>
+            How to use this in Claude →
+          </button>
+          <button onClick={() => setShowSummary(false)}
+            style={{ width: "100%", background: "transparent", color: c.muted, border: `1px solid ${c.border}`, borderRadius: "12px", padding: "0.85rem", fontFamily: "sans-serif", fontSize: "0.85rem", cursor: "pointer" }}>
+            ← Go back and edit
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ fontFamily: "Georgia, serif", background: c.bg, minHeight: "100vh" }}>
+      {/* Header */}
+      <div style={{ background: c.deep, padding: "1.5rem 1.5rem 1rem" }}>
+        <div style={{ maxWidth: "680px", margin: "0 auto" }}>
+          <div style={{ fontSize: "0.68rem", letterSpacing: "0.2em", color: c.accent, textTransform: "uppercase", fontFamily: "sans-serif", marginBottom: "0.3rem" }}>
+            Enagic Business Builder
+          </div>
+          <h1 style={{ color: "#fff", fontSize: "1.5rem", margin: "0 0 0.2rem", fontWeight: "700" }}>Your Grand Slam Offer</h1>
+          <p style={{ color: c.muted, fontFamily: "sans-serif", fontSize: "0.8rem", margin: "0 0 0.75rem", lineHeight: "1.5" }}>
+            Answer honestly. There are no wrong answers. This is the foundation of your entire business and content strategy.
+          </p>
+          <ProgressBar current={currentSection + 1} total={totalSections} />
+          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "sans-serif", fontSize: "0.72rem", color: c.muted }}>
+            <span>Section {currentSection + 1} of {totalSections}</span>
+            <span>{sections.filter((s, i) => i <= currentSection && sectionComplete(s)).length} complete</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Section Nav Pills */}
+      <div style={{ background: c.deep, borderBottom: `1px solid #2A2520`, overflowX: "auto", display: "flex", gap: "0.4rem", padding: "0.6rem 1.5rem" }}>
+        {sections.map((s, i) => (
+          <button key={i} onClick={() => setCurrentSection(i)}
+            style={{ padding: "0.4rem 0.85rem", borderRadius: "20px", border: "none", background: i === currentSection ? c.accent : sectionComplete(s) ? c.accentLight : "#2A2520",
+              color: i === currentSection ? "#fff" : sectionComplete(s) ? c.accent : c.muted, fontFamily: "sans-serif", fontSize: "0.72rem", fontWeight: "600", cursor: "pointer", whiteSpace: "nowrap", transition: "all 0.2s" }}>
+            {sectionComplete(s) && i !== currentSection ? "✓ " : ""}{s.emoji} {s.title}
+          </button>
+        ))}
+      </div>
+
+      {/* Section Content */}
+      <div style={{ padding: "1.5rem", maxWidth: "680px", margin: "0 auto" }}>
+        <div style={{ marginBottom: "1.5rem" }}>
+          <h2 style={{ fontSize: "1.2rem", margin: "0 0 0.3rem", color: c.deep }}>{section.emoji} {section.title}</h2>
+          <p style={{ fontFamily: "sans-serif", fontSize: "0.84rem", color: c.mid, margin: 0, lineHeight: "1.6" }}>{section.subtitle}</p>
+        </div>
+
+        {section.questions.map(q => (
+          <Question key={q.id} q={q} value={answers[q.id]} onChange={(val) => setAnswer(q.id, val)} />
+        ))}
+
+        <div style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}>
+          {currentSection > 0 && (
+            <button onClick={() => setCurrentSection(prev => prev - 1)}
+              style={{ flex: 1, padding: "0.9rem", borderRadius: "10px", border: `1.5px solid ${c.border}`, background: "#fff", color: c.mid, fontFamily: "sans-serif", fontSize: "0.88rem", fontWeight: "600", cursor: "pointer" }}>
+              ← Back
+            </button>
+          )}
+          {currentSection < totalSections - 1 ? (
+            <button onClick={() => setCurrentSection(prev => prev + 1)}
+              style={{ flex: 2, padding: "0.9rem", borderRadius: "10px", border: "none", background: sectionComplete(section) ? c.accent : c.border, color: "#fff", fontFamily: "sans-serif", fontSize: "0.88rem", fontWeight: "700", cursor: sectionComplete(section) ? "pointer" : "default", transition: "background 0.2s" }}>
+              Next section →
+            </button>
+          ) : (
+            <button onClick={() => allComplete && setShowSummary(true)}
+              style={{ flex: 2, padding: "0.9rem", borderRadius: "10px", border: "none", background: allComplete ? c.accent : c.border, color: "#fff", fontFamily: "sans-serif", fontSize: "0.88rem", fontWeight: "700", cursor: allComplete ? "pointer" : "default", transition: "background 0.2s" }}>
+              {allComplete ? "Generate my offer summary →" : "Complete all sections first"}
+            </button>
+          )}
+        </div>
+
+        {!sectionComplete(section) && (
+          <p style={{ fontFamily: "sans-serif", fontSize: "0.75rem", color: c.muted, textAlign: "center", marginTop: "0.75rem" }}>
+            Answer all questions in this section to continue
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
