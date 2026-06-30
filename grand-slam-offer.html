@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Grand Slam Offer — Enagic Business Builder</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F4EF;
+    --card: #FFFFFF;
+    --deep: #1A1612;
+    --mid: #5C5448;
+    --muted: #9C9188;
+    --border: #E2DAD0;
+    --accent: #C4622D;
+    --accent-light: #F5EAE2;
+    --accent-dark: #9E4E24;
+    --green: #4A7A5C;
+    --green-light: #EBF4EE;
+  }
+
+  body {
+    font-family: Georgia, serif;
+    background: var(--bg);
+    color: var(--deep);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--deep);
+    padding: 1.5rem 1.5rem 1rem;
+  }
+  .header-inner { max-width: 680px; margin: 0 auto; }
+  .eyebrow {
+    font-family: sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .header h1 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+    font-weight: 700;
+  }
+  .header p {
+    color: var(--muted);
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+
+  /* PROGRESS */
+  .progress-track {
+    background: rgba(255,255,255,0.15);
+    border-radius: 99px;
+    height: 6px;
+    margin-bottom: 0.4rem;
+  }
+  .progress-fill {
+    background: var(--accent);
+    border-radius: 99px;
+    height: 6px;
+    transition: width 0.4s ease;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: sans-serif;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  /* NAV PILLS */
+  .nav-pills {
+    background: var(--deep);
+    border-bottom: 1px solid #2A2520;
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.6rem 1.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-pills::-webkit-scrollbar { display: none; }
+  .pill {
+    padding: 0.4rem 0.85rem;
+    border-radius: 20px;
+    border: none;
+    font-family: sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    background: #2A2520;
+    color: var(--muted);
+  }
+  .pill.active { background: var(--accent); color: #fff; }
+  .pill.done { background: var(--accent-light); color: var(--accent); }
+
+  /* MAIN CONTENT */
+  .main { padding: 1.5rem; max-width: 680px; margin: 0 auto; }
+
+  .section-header { margin-bottom: 1.5rem; }
+  .section-header h2 { font-size: 1.2rem; color: #FFFFFF; margin-bottom: 0.3rem; }
+  .section-header p { font-family: sans-serif; font-size: 0.84rem; color: #C8BFB5; line-height: 1.6; }
+
+  /* QUESTIONS */
+  .question { margin-bottom: 1.75rem; }
+  .question label {
+    display: block;
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #FFFFFF;
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+  .tip {
+    font-family: sans-serif;
+    font-size: 0.75rem;
+    color: #C8BFB5;
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+  input[type="text"], textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    font-family: sans-serif;
+    font-size: 0.88rem;
+    color: var(--deep);
+    outline: none;
+    background: #fff;
+    transition: border-color 0.15s;
+    resize: vertical;
+  }
+  input[type="text"]:focus, textarea:focus { border-color: var(--accent); }
+  input[type="text"].filled, textarea.filled { border-color: var(--accent); }
+  textarea { line-height: 1.6; min-height: 100px; }
+
+  /* CHECKBOXES */
+  .checkbox-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    color: var(--deep);
+    text-align: left;
+    width: 100%;
+  }
+  .checkbox-item.checked { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+  .checkbox-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid var(--border);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    transition: all 0.15s;
+  }
+  .checkbox-item.checked .checkbox-box { background: var(--accent); border-color: var(--accent); }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 0.75rem; margin-top: 1rem; }
+  .btn {
+    flex: 1;
+    padding: 0.9rem;
+    border-radius: 10px;
+    font-family: sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; flex: 2; }
+  .btn-primary:disabled { background: var(--border); cursor: default; }
+  .btn-primary:not(:disabled):hover { background: var(--accent-dark); }
+  .btn-secondary { background: #fff; color: var(--mid); border: 1.5px solid var(--border) !important; border: none; }
+  .hint-text { font-family: sans-serif; font-size: 0.75rem; color: #C8BFB5; text-align: center; margin-top: 0.75rem; }
+
+  /* SUMMARY PAGE */
+  .summary-card { background: var(--card); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; border: 1px solid var(--border); }
+  .summary-card h3 { font-family: sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--deep); margin-bottom: 0.75rem; }
+  .summary-toprow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+  .copy-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .copy-btn.copied { background: var(--green); }
+  .summary-text {
+    font-family: sans-serif;
+    font-size: 0.78rem;
+    color: var(--mid);
+    line-height: 1.8;
+    white-space: pre-wrap;
+    background: #FAFAFA;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .btn-full {
+    width: 100%;
+    padding: 1.1rem;
+    border-radius: 12px;
+    border: none;
+    font-family: sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 0.75rem;
+    transition: background 0.2s;
+  }
+  .btn-full-accent { background: var(--accent); color: #fff; }
+  .btn-full-accent:hover { background: var(--accent-dark); }
+  .btn-full-outline { background: transparent; color: var(--muted); border: 1px solid var(--border) !important; border: none; }
+
+  /* CLAUDE STEPS PAGE */
+  .step-card { background: var(--card); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; border: 1px solid var(--border); }
+  .step-header { padding: 1rem; display: flex; gap: 0.75rem; align-items: flex-start; }
+  .step-icon {
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .step-title { font-family: sans-serif; font-weight: 700; color: var(--deep); margin-bottom: 0.25rem; }
+  .step-detail { font-family: sans-serif; font-size: 0.83rem; color: var(--mid); line-height: 1.6; }
+  .prompt-box { padding: 1rem; background: #FAFAFA; border-top: 1px solid var(--border); }
+  .prompt-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .prompt-label { font-family: sans-serif; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .prompt-text {
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.85rem;
+    border: 1px solid var(--border);
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    color: var(--mid);
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+  .success-box {
+    background: var(--accent-light);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border: 1px solid rgba(196,98,45,0.25);
+    text-align: center;
+  }
+  .success-box .emoji { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .success-box h3 { font-family: sans-serif; font-weight: 700; color: var(--deep); margin-bottom: 0.4rem; }
+  .success-box p { font-family: sans-serif; font-size: 0.83rem; color: var(--mid); line-height: 1.6; }
+
+  /* WELCOME PAGE */
+  .welcome-hero {
+    background: var(--deep);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+  }
+  .welcome-hero .eyebrow { margin-bottom: 0.5rem; }
+  .welcome-hero h1 { color: #fff; font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .welcome-hero .tagline { color: var(--muted); font-family: sans-serif; font-size: 0.88rem; line-height: 1.6; max-width: 480px; margin: 0 auto 1.5rem; }
+  .welcome-from {
+    background: rgba(196,98,45,0.12);
+    border: 1px solid rgba(196,98,45,0.25);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    max-width: 480px;
+    margin: 0 auto 1.5rem;
+    text-align: left;
+  }
+  .welcome-from-label { font-family: sans-serif; font-size: 0.68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.4rem; }
+  .welcome-from-text { font-family: sans-serif; font-size: 0.85rem; color: var(--sand, #D4B896); line-height: 1.7; color: #D4B896; }
+  .time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 0.4rem 0.85rem;
+    font-family: sans-serif;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .claude-notice {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+    max-width: 480px;
+    margin: 0 auto 1.75rem;
+    border: 1.5px solid var(--border);
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .claude-notice-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .claude-notice-title { font-family: sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--deep); margin-bottom: 0.2rem; }
+  .claude-notice-text { font-family: sans-serif; font-size: 0.8rem; color: var(--mid); line-height: 1.6; }
+  .claude-notice-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+  .welcome-steps {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    max-width: 480px;
+    margin: 0 auto 1.75rem;
+  }
+  .welcome-step-pill {
+    background: rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 0.35rem 0.75rem;
+    font-family: sans-serif;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .btn-start {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 1.1rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-start:hover { background: var(--accent-dark); }
+
+  /* WHAT HAPPENS NEXT BOX */
+  .next-steps-box {
+    background: var(--green-light);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid rgba(74,122,92,0.25);
+    margin-top: 1rem;
+  }
+  .next-steps-label { font-family: sans-serif; font-size: 0.68rem; color: var(--green); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; margin-bottom: 0.5rem; }
+  .next-steps-text { font-family: sans-serif; font-size: 0.83rem; color: #2D5C3E; line-height: 1.7; }
+  .next-steps-text strong { font-weight: 700; }
+
+  /* PAGE VISIBILITY */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .header { display: none; }
+  .nav-pills { display: none; }
+  @media (max-width: 480px) {
+    .header h1 { font-size: 1.3rem; }
+    .main { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- WELCOME PAGE -->
+<div class="page active" id="page-welcome">
+  <div class="welcome-hero">
+    <div class="eyebrow">Enagic Business Builder</div>
+    <h1>Your Grand Slam Offer</h1>
+    <p class="tagline">This questionnaire will help you get clear on your story, your audience, and what you offer — then show you exactly how to turn it into a full content system using Claude AI.</p>
+    <div class="time-badge">⏱️ Takes about 15 minutes — set aside some quiet time</div>
+    <div class="welcome-from">
+      <div class="welcome-from-label">A note from Damian</div>
+      <div class="welcome-from-text">"Hey! Fill this out as honestly as you can — there are no right or wrong answers. Everything you write here belongs to you and your story. The more real you are, the better your content will be. I went through this same process and it changed how I think about my business. Trust it. 🙏"</div>
+    </div>
+    <div class="claude-notice">
+      <div class="claude-notice-icon">⚠️</div>
+      <div>
+        <div class="claude-notice-title">Before you start — you'll need a Claude account</div>
+        <div class="claude-notice-text">At the end of this questionnaire you'll take your results to <a href="https://claude.ai" target="_blank" class="claude-notice-link">claude.ai</a> to build your content system. It's free to sign up — just an email address. Get your account ready now so you're not held up at the end.</div>
+      </div>
+    </div>
+    <div class="welcome-steps">
+      <span class="welcome-step-pill">👤 Your Story</span>
+      <span class="welcome-step-pill">🎯 Your Audience</span>
+      <span class="welcome-step-pill">💎 Your Offer</span>
+      <span class="welcome-step-pill">📱 Your Content</span>
+      <span class="welcome-step-pill">🚀 Build with Claude</span>
+    </div>
+    <button class="btn-start" onclick="startQuestionnaire()">Let's build your offer →</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="eyebrow">Enagic Business Builder</div>
+    <h1>Your Grand Slam Offer</h1>
+    <p>Answer honestly. There are no wrong answers. This is the foundation of your entire business and content strategy.</p>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
+    <div class="progress-label">
+      <span id="progressLabel">Section 1 of 4</span>
+      <span id="progressComplete">0 complete</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV PILLS -->
+<div class="nav-pills" id="navPills">
+  <button class="pill active" onclick="goToSection(0)">👤 Let's Start With You</button>
+  <button class="pill" onclick="goToSection(1)">🎯 Who Do You Want to Help?</button>
+  <button class="pill" onclick="goToSection(2)">💎 Your Grand Slam Offer</button>
+  <button class="pill" onclick="goToSection(3)">📱 Your Content Foundation</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SECTION 0: YOU -->
+  <div class="page active" id="section-0">
+    <div class="section-header">
+      <h2>👤 Let's Start With You</h2>
+      <p>Before we talk about the business, we need to understand your story. This is where your content and your offer will come from.</p>
+    </div>
+    <div class="question">
+      <label>What's your name?</label>
+      <input type="text" id="q-name" placeholder="First and last name" oninput="checkFilled(this)" />
+    </div>
+    <div class="question">
+      <label>What's your current or most recent job/career?</label>
+      <p class="tip">💡 Don't overthink this. Whatever you do or did — that's your story and your credibility.</p>
+      <input type="text" id="q-background" placeholder="e.g. Electrician, Nurse, Firefighter, Stay-at-home parent..." oninput="checkFilled(this)" />
+    </div>
+    <div class="question">
+      <label>How long have you been doing it?</label>
+      <input type="text" id="q-years" placeholder="e.g. 8 years, just finished my apprenticeship, 15 years..." oninput="checkFilled(this)" />
+    </div>
+    <div class="question">
+      <label>What made you open to building something different?</label>
+      <p class="tip">💡 This becomes one of your most powerful pieces of content. The more honest you are, the more people will relate.</p>
+      <textarea id="q-why_left" placeholder="Be honest. Was it the hours? The income ceiling? A life event? Wanting more time? There's no wrong answer here." oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="question">
+      <label>What does your ideal life actually look like?</label>
+      <p class="tip">💡 Not the 'right' answer — your real answer. This is your vision and it drives everything.</p>
+      <textarea id="q-travel_life" placeholder="Where are you? What are you doing? Who are you with? What does a Tuesday morning look like?" oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="next-0" onclick="nextSection(0)" disabled>Next section →</button>
+    </div>
+    <p class="hint-text" id="hint-0">Answer all questions to continue</p>
+  </div>
+
+  <!-- SECTION 1: AUDIENCE -->
+  <div class="page" id="section-1">
+    <div class="section-header">
+      <h2>🎯 Who Do You Want to Help?</h2>
+      <p>The best businesses are built by people who speak directly to someone they understand. You don't need to help everyone — just the right people.</p>
+    </div>
+    <div class="question">
+      <label>Who do you naturally want to help?</label>
+      <p class="tip">💡 It's usually people who remind you of who you were before you found this.</p>
+      <textarea id="q-audience_who" placeholder="Think about people in your world — your old workmates, your friends, people in your industry. Who do you look at and think 'I could help them'?" oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="question">
+      <label>What's the biggest problem they have that you now understand?</label>
+      <p class="tip">💡 Speak to the feeling, not just the circumstance. People buy solutions to feelings.</p>
+      <textarea id="q-audience_problem" placeholder="e.g. They're working long hours with no way out. They feel stuck. They want more time with their kids but don't know how to earn differently." oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="question">
+      <label>What belief is holding them back?</label>
+      <p class="tip">💡 This is gold for your content. The belief you bust will be your most-watched videos.</p>
+      <textarea id="q-audience_belief" placeholder="e.g. 'I'm not techy enough.' 'I'd have to quit my job first.' 'This sounds like a pyramid scheme.' 'People like me don't do stuff like this.'" oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="question">
+      <label>What do they actually want more than anything?</label>
+      <p class="tip">💡 Say this back to them in your content and they'll feel like you read their mind.</p>
+      <textarea id="q-audience_dream" placeholder="e.g. To not need an alarm. To be at every school pickup. To stop trading every hour for a dollar. To travel. To build something for their family." oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goToSection(0)">← Back</button>
+      <button class="btn btn-primary" id="next-1" onclick="nextSection(1)" disabled>Next section →</button>
+    </div>
+    <p class="hint-text" id="hint-1">Answer all questions to continue</p>
+  </div>
+
+  <!-- SECTION 2: OFFER -->
+  <div class="page" id="section-2">
+    <div class="section-header">
+      <h2>💎 Your Grand Slam Offer</h2>
+      <p>Now we build what you actually offer people. With Enagic, the product is the vehicle — but what you're really selling is the transformation and the mentorship.</p>
+    </div>
+    <div class="question">
+      <label>What is the core promise you make to someone who joins your team?</label>
+      <p class="tip">💡 Complete this: "I will help you _______ so that you can _______." Keep it simple and honest.</p>
+      <textarea id="q-core_promise" placeholder="Example: 'I will help you build an income through Enagic so that you can create a life that isn't defined by a roster or a boss.'" oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="question">
+      <label>What do you actually give them when they join? List everything.</label>
+      <p class="tip">💡 Don't undervalue what you offer. Mentorship, time, and access to someone who's figured it out is genuinely valuable.</p>
+      <textarea id="q-what_you_give" placeholder="e.g. One-on-one mentorship, weekly team calls, help with their first sale, content coaching, product training, someone to answer their questions..." oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goToSection(1)">← Back</button>
+      <button class="btn btn-primary" id="next-2" onclick="nextSection(2)" disabled>Next section →</button>
+    </div>
+    <p class="hint-text" id="hint-2">Answer all questions to continue</p>
+  </div>
+
+  <!-- SECTION 3: CONTENT -->
+  <div class="page" id="section-3">
+    <div class="section-header">
+      <h2>📱 Your Content Foundation</h2>
+      <p>Your content is how people find you and decide to trust you. These answers will shape everything you post.</p>
+    </div>
+    <div class="question">
+      <label>What was the moment you decided to go all in on this?</label>
+      <p class="tip">💡 This is your most powerful reel. A specific moment, conversation, or realisation. The more specific the better.</p>
+      <textarea id="q-origin_moment" placeholder="A specific moment, conversation, or realisation. Dates, amounts, feelings — the more specific the better." oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="question">
+      <label>What doubts or judgement did you face when you started?</label>
+      <p class="tip">💡 Every person your audience respects who faced the same doubt and kept going is powerful. This is your relatability.</p>
+      <textarea id="q-doubts_faced" placeholder="Family? Friends? Colleagues? Your own head? What did people say or think?" oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="question">
+      <label>Where will you show up? (Social media platforms)</label>
+      <p class="tip">💡 Start with one and do it well. You can expand later.</p>
+      <input type="text" id="q-platforms" placeholder="e.g. Instagram, TikTok, Facebook — or just Instagram for now" oninput="checkFilled(this)" />
+    </div>
+    <div class="question">
+      <label>What kind of content are you most comfortable creating?</label>
+      <p class="tip">💡 Be honest — you'll stick with what feels natural.</p>
+      <div class="checkbox-group" id="content_comfort_group">
+        <button class="checkbox-item" onclick="toggleCheck(this, 'content_comfort', 'Talking to camera (Reels)')">
+          <div class="checkbox-box"></div>Talking to camera (Reels)
+        </button>
+        <button class="checkbox-item" onclick="toggleCheck(this, 'content_comfort', 'Behind the scenes / Day in the life')">
+          <div class="checkbox-box"></div>Behind the scenes / Day in the life
+        </button>
+        <button class="checkbox-item" onclick="toggleCheck(this, 'content_comfort', 'Educational explainers')">
+          <div class="checkbox-box"></div>Educational explainers
+        </button>
+        <button class="checkbox-item" onclick="toggleCheck(this, 'content_comfort', 'Raw personal stories')">
+          <div class="checkbox-box"></div>Raw personal stories
+        </button>
+        <button class="checkbox-item" onclick="toggleCheck(this, 'content_comfort', 'Lifestyle / travel content')">
+          <div class="checkbox-box"></div>Lifestyle / travel content
+        </button>
+        <button class="checkbox-item" onclick="toggleCheck(this, 'content_comfort', 'Testimonials from customers')">
+          <div class="checkbox-box"></div>Testimonials from customers
+        </button>
+        <button class="checkbox-item" onclick="toggleCheck(this, 'content_comfort', 'Text-based posts')">
+          <div class="checkbox-box"></div>Text-based posts
+        </button>
+      </div>
+    </div>
+    <div class="question">
+      <label>Sum up your brand in one sentence.</label>
+      <p class="tip">💡 Don't overthink it — just write something honest. We'll refine it when you take this to Claude.</p>
+      <textarea id="q-one_sentence" placeholder="e.g. 'A nurse who found a way to earn without a roster, now helping others do the same.'" oninput="checkFilled(this)"></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goToSection(2)">← Back</button>
+      <button class="btn btn-primary" id="next-3" onclick="showSummary()" disabled>Generate my offer summary →</button>
+    </div>
+    <p class="hint-text" id="hint-3">Answer all questions to continue</p>
+  </div>
+
+  <!-- SUMMARY PAGE -->
+  <div class="page" id="page-summary">
+    <div class="summary-card">
+      <div class="summary-toprow">
+        <h3>Your Grand Slam Offer Summary</h3>
+        <button class="copy-btn" id="copyBtn" onclick="copySummary()">Copy all</button>
+      </div>
+      <div class="summary-text" id="summaryText"></div>
+    </div>
+    <button class="btn-full btn-full-accent" onclick="showClaudeSteps()">How to use this in Claude →</button>
+    <button class="btn-full btn-full-outline" onclick="goToSection(3)" style="border: 1px solid var(--border);">← Go back and edit</button>
+  </div>
+
+  <!-- CLAUDE STEPS PAGE -->
+  <div class="page" id="page-claude">
+    <button onclick="showSummary()" style="background:transparent;border:none;color:var(--muted);font-family:sans-serif;font-size:0.8rem;cursor:pointer;margin-bottom:1rem;display:block;">← Back to summary</button>
+    <div class="section-header">
+      <h2>How to Use Claude</h2>
+      <p>Follow these steps to build your full content system. Each step has a prompt you can copy straight into Claude.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-icon">🌐</div>
+        <div>
+          <div class="step-title">Step 1: Go to claude.ai</div>
+          <div class="step-detail">Open claude.ai on your phone or computer. You don't need a paid account to start — the free version works fine.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-icon">👋</div>
+        <div>
+          <div class="step-title">Step 2: Introduce yourself and the business</div>
+          <div class="step-detail">Copy and paste the message below as your very first message to Claude. This sets the context for everything that follows.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label-row">
+          <span class="prompt-label">Copy this prompt</span>
+          <button class="copy-btn" id="copy-p1" onclick="copyPrompt('p1')">Copy</button>
+        </div>
+        <div class="prompt-text" id="prompt-p1">Hi Claude! I'm building an Enagic affiliate marketing business and I want your help creating a content system and personal brand strategy tailored specifically to me.
+
+I'm going to paste in my Grand Slam Offer summary in a moment. Before I do, I want you to understand the business model: Enagic sells Kangen water machines (medical-grade water ionisers ranging from $4K-$8K). As an affiliate, I earn commissions when I help someone purchase a machine. What makes this different is that I also mentor my customers — helping them build their own business if they choose to, just like my mentor did for me.
+
+My goal is to build a personal brand on [YOUR PLATFORM/S] that attracts the right people, tells my story, and leads them to DM me. I want help with: my content pillars, a weekly posting framework, reel scripts written in my voice, caption templates, and a 30 day content plan.
+
+Ready for my offer summary?</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-icon">📋</div>
+        <div>
+          <div class="step-title">Step 3: Paste your Grand Slam Offer summary</div>
+          <div class="step-detail">After Claude replies, go back to the previous screen and copy your full summary. Paste it into Claude. It will use everything to understand your story, your audience, and what makes you unique.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-icon">🗺️</div>
+        <div>
+          <div class="step-title">Step 4: Tell Claude about your life and setup</div>
+          <div class="step-detail">Share the details that make your story visual and specific — where you live or travel, your job, your setup, and any results you've had so far. The more specific, the better your content will be.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label-row">
+          <span class="prompt-label">Copy this prompt</span>
+          <button class="copy-btn" id="copy-p2" onclick="copyPrompt('p2')">Copy</button>
+        </div>
+        <div class="prompt-text" id="prompt-p2">Here's some context about my life and setup that will help make my content specific and visual:
+
+- My background: [YOUR JOB / CAREER]
+- My story: [1-2 sentences on why you started this]
+- Where I'm based / how I live: [home, travelling, city, regional, etc.]
+- My best result so far: [first commission, income milestone, lifestyle change]
+- The doubts I faced: [what people said or thought when you started]
+- My partner / family situation: [optional but powerful if relevant]
+
+Please use all of this to build me a content system that feels completely specific to my life — not generic online business content.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-icon">🚀</div>
+        <div>
+          <div class="step-title">Step 5: Ask for your full content system</div>
+          <div class="step-detail">Once Claude has your offer and your context, use the prompt below to request your complete content system.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label-row">
+          <span class="prompt-label">Copy this prompt</span>
+          <button class="copy-btn" id="copy-p3" onclick="copyPrompt('p3')">Copy</button>
+        </div>
+        <div class="prompt-text" id="prompt-p3">Based on everything I've shared, please build me:
+
+1. My 5 core content pillars with a description and content ideas for each
+2. A weekly posting framework (which days, what themes, what type of content)
+3. At least 5 full reel scripts written in my voice with scene-by-scene direction
+4. 3 caption templates for my most important content types
+5. A 30 day content plan with specific reel and story ideas for each day
+
+Please make everything specific to MY story, MY audience, and MY background — not generic. Write it in a tone that feels natural for someone like me to actually say out loud.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-icon">💾</div>
+        <div>
+          <div class="step-title">Step 6: Save everything to Claude's memory</div>
+          <div class="step-detail">Ask Claude to save your details so every future chat picks up right where you left off — no re-explaining needed.</div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label-row">
+          <span class="prompt-label">Copy this prompt</span>
+          <button class="copy-btn" id="copy-p4" onclick="copyPrompt('p4')">Copy</button>
+        </div>
+        <div class="prompt-text" id="prompt-p4">Please save everything important about me to your memory so our future chats don't start from scratch. Save my name, my background, my business, my content strategy, my audience, my platforms, and any key results or story details I've shared.</div>
+      </div>
+    </div>
+
+    <div class="success-box">
+      <div class="emoji">🙌</div>
+      <h3>That's it. You're ready.</h3>
+      <p>Claude will take everything you've shared and build a content system tailored specifically to you. Come back to it anytime — the more you use it, the better it gets.</p>
+    </div>
+
+    <div class="next-steps-box">
+      <div class="next-steps-label">📲 What happens next</div>
+      <div class="next-steps-text">Once you've built your content system with Claude, <strong>share it with Damian</strong> so he can review it with you. This is part of your mentorship — he'll help you refine it, tighten your messaging, and make sure you're set up for your first post. Don't skip this step. 🙏</div>
+    </div>
+  </div>
+
+</div><!-- end .main -->
+
+<script>
+  function startQuestionnaire() {
+    document.querySelector('.header').style.display = 'block';
+    document.querySelector('.nav-pills').style.display = 'flex';
+    showPage('section-0');
+    currentSection = 0;
+    updateProgress();
+    updateSectionButton(0);
+    window.scrollTo(0, 0);
+  }
+
+  // State
+  const answers = {};
+  const checkboxValues = { content_comfort: [] };
+  let currentSection = 0;
+
+  const sectionFields = [
+    ['q-name','q-background','q-years','q-why_left','q-travel_life'],
+    ['q-audience_who','q-audience_problem','q-audience_belief','q-audience_dream'],
+    ['q-core_promise','q-what_you_give'],
+    ['q-origin_moment','q-doubts_faced','q-platforms','content_comfort','q-one_sentence'],
+  ];
+
+  function checkFilled(el) {
+    const val = el.value.trim();
+    answers[el.id] = val;
+    el.classList.toggle('filled', val.length > 0);
+    updateSectionButton(currentSection);
+  }
+
+  function toggleCheck(btn, group, value) {
+    const arr = checkboxValues[group];
+    const idx = arr.indexOf(value);
+    if (idx > -1) {
+      arr.splice(idx, 1);
+      btn.classList.remove('checked');
+      btn.querySelector('.checkbox-box').textContent = '';
+    } else {
+      arr.push(value);
+      btn.classList.add('checked');
+      btn.querySelector('.checkbox-box').textContent = '✓';
+    }
+    updateSectionButton(currentSection);
+  }
+
+  function isSectionComplete(idx) {
+    return sectionFields[idx].every(fid => {
+      if (fid === 'content_comfort') return checkboxValues.content_comfort.length > 0;
+      const el = document.getElementById(fid);
+      return el && el.value.trim().length > 0;
+    });
+  }
+
+  function updateSectionButton(idx) {
+    const btn = document.getElementById('next-' + idx);
+    const hint = document.getElementById('hint-' + idx);
+    if (!btn) return;
+    const complete = isSectionComplete(idx);
+    btn.disabled = !complete;
+    if (hint) hint.style.display = complete ? 'none' : 'block';
+  }
+
+  function updateProgress() {
+    const complete = [0,1,2,3].filter(isSectionComplete).length;
+    const pct = ((currentSection + 1) / 4) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = 'Section ' + (currentSection + 1) + ' of 4';
+    document.getElementById('progressComplete').textContent = complete + ' complete';
+
+    const pills = document.querySelectorAll('.pill');
+    pills.forEach((p, i) => {
+      p.className = 'pill';
+      if (i === currentSection) p.classList.add('active');
+      else if (isSectionComplete(i)) p.classList.add('done');
+    });
+  }
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function goToSection(idx) {
+    currentSection = idx;
+    showPage('section-' + idx);
+    updateProgress();
+    updateSectionButton(idx);
+    window.scrollTo(0, 0);
+  }
+
+  function nextSection(idx) {
+    if (!isSectionComplete(idx)) return;
+    goToSection(idx + 1);
+  }
+
+  function generateSummary() {
+    const g = (id) => {
+      if (id === 'content_comfort') return checkboxValues.content_comfort.join(', ') || '[not answered]';
+      const el = document.getElementById('q-' + id);
+      return el ? (el.value.trim() || '[not answered]') : '[not answered]';
+    };
+    return `GRAND SLAM OFFER SUMMARY
+========================
+
+WHO I AM
+Name: ${g('name')}
+Background: ${g('background')} (${g('years')})
+Why I opened up to something different: ${g('why_left')}
+My ideal life: ${g('travel_life')}
+
+MY AUDIENCE
+Who I want to help: ${g('audience_who')}
+Their biggest problem: ${g('audience_problem')}
+The belief holding them back: ${g('audience_belief')}
+What they actually want: ${g('audience_dream')}
+
+MY OFFER
+Core promise: ${g('core_promise')}
+What I give them: ${g('what_you_give')}
+
+MY CONTENT FOUNDATION
+The moment I went all in: ${g('origin_moment')}
+Doubts and judgement I faced: ${g('doubts_faced')}
+Where I'll show up: ${g('platforms')}
+Content I'm most comfortable with: ${g('content_comfort')}
+My brand in one sentence: ${g('one_sentence')}`;
+  }
+
+  function showSummary() {
+    document.getElementById('summaryText').textContent = generateSummary();
+    showPage('page-summary');
+    document.getElementById('copyBtn').textContent = 'Copy all';
+    document.getElementById('copyBtn').classList.remove('copied');
+    window.scrollTo(0, 0);
+  }
+
+  function copySummary() {
+    const text = document.getElementById('summaryText').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy all'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function copyPrompt(key) {
+    const text = document.getElementById('prompt-' + key).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copy-' + key);
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function showClaudeSteps() {
+    showPage('page-claude');
+    window.scrollTo(0, 0);
+  }
+
+  // Init
+  updateProgress();
+  updateSectionButton(0);
+</script>
+</body>
+</html>
