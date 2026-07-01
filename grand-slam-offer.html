@@ -10,7 +10,7 @@
   :root {
     --bg: #F7F4EF;
     --card: #FFFFFF;h
-    --deep: #1A1612;
+    --deep: #1A1612;h
     --mid: #5C5448;h
     --muted: #9C9188;
     --border: #E2DAD0;
@@ -295,7 +295,7 @@
     text-align: center;
   }
   .welcome-hero .eyebrow { margin-bottom: 0.5rem; }
-  .welcome-hero h1 { color: #fff; font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .welcome-hero h1 { color: #000; font-size: 1.8rem; margin-bottom: 0.5rem; }
   .welcome-hero .tagline { color: var(--muted); font-family: sans-serif; font-size: 0.88rem; line-height: 1.6; max-width: 480px; margin: 0 auto 1.5rem; }
   .welcome-from {
     background: rgba(196,98,45,0.12);
@@ -451,7 +451,7 @@
 <div class="main">
 
   <!-- SECTION 0: YOU -->
-  <div class="page active" id="section-0">
+  <div class="page" id="section-0">
     <div class="section-header">
       <h2>👤 Let's Start With You</h2>
       <p>Before we talk about the business, we need to understand your story. This is where your content and your offer will come from.</p>
@@ -898,7 +898,7 @@ My brand in one sentence: ${g('one_sentence')}`;
     navigator.clipboard.writeText(text).then(() => {
       const btn = document.getElementById('copy-' + key);
       btn.textContent = 'Copied ✓';
-      btn.classList.add('copied');
+      btn.classList.add('copied');h
       setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
     });
   }
