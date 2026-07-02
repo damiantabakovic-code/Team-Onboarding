@@ -77,63 +77,30 @@ const claudeSteps = [
   },
   {
     step: 2,
-    title: "Start a new chat and introduce yourself",
-    detail: "Copy and paste the message below as your very first message to Claude. This sets the context for everything that follows.",
-    icon: "👋",
-    prompt: `Hi Claude! I'm building an Enagic affiliate marketing business and I want your help creating a content system and personal brand strategy tailored specifically to me.
-
-I'm going to paste in my Grand Slam Offer summary in a moment. Before I do, I want you to understand the business model: Enagic sells Kangen water machines (medical-grade water ionisers ranging from $4K-$8K). As an affiliate, I earn commissions when I help someone purchase a machine. What makes this different is that I also mentor my customers — helping them build their own business if they choose to, just like my mentor did for me.
-
-My goal is to build a personal brand on [YOUR PLATFORM/S] that attracts the right people, tells my story, and leads them to DM me.
-
-Ready for my offer summary?`,
-  },
-  {
-    step: 3,
     title: "Paste your Grand Slam Offer summary",
-    detail: "After Claude replies, paste in the full summary that was generated at the end of this questionnaire. Claude will use it to understand your story, your audience, and what makes you unique.",
+    detail: "Start a new chat and paste in the full summary generated at the end of this questionnaire. Use the prompt below to send it — this tells Claude exactly what to do with your summary and builds your complete interactive content system in one go.",
     icon: "📋",
-  },
-  {
-    step: 4,
-    title: "Tell Claude about your life and setup",
-    detail: "Share the details that make your story visual and specific — where you live or travel, your job or former job, your setup (car, home, workspace), and any results you've had so far. The more specific you are, the better your content will be.",
-    icon: "🗺️",
-    prompt: `Here's some context about my life and setup that will help make my content specific and visual:
+    prompt: `Hi Claude! I'm building an Enagic affiliate marketing business. Below is my Grand Slam Offer summary — everything about me, my story, my audience, and my offer. Read it carefully, then immediately build me a complete interactive content system as a single artifact with 4 tabs. Do not reply with text — just build the artifact.
 
-- My background: [YOUR JOB / CAREER]
-- My story: [1-2 sentences on why you started this]
-- Where I'm based / how I live: [home, travelling, city, regional, etc.]
-- My best result so far: [first commission, income milestone, lifestyle change]
-- The doubts I faced: [what people said or thought when you started]
-- My partner / family situation: [optional but powerful if relevant]
+[PASTE YOUR GRAND SLAM OFFER SUMMARY HERE]
 
-Please use all of this to build me a content system that feels completely specific to my life — not generic online business content.`,
-  },
-  {
-    step: 5,
-    title: "Build your interactive content system",
-    detail: "Once Claude has your offer and your context, use the prompt below to generate your full content system as an interactive file you can navigate — not just plain text. This is the prompt that builds the tabbed file.",
-    icon: "🚀",
-    prompt: `Now build my complete content system as a single interactive artifact I can navigate with tabs — not as plain text in the chat.
-
-Build it with exactly 4 tabs:
+Build the artifact with exactly these 4 tabs:
 
 TAB 1 — Weekly Framework: A repeatable 4-post-per-week structure. Assign a theme to specific days. For each day include: the content theme, what the reel should cover, 3 story ideas, and 3 example hooks written in my voice.
 
-TAB 2 — Reel Scripts: At least 5 full scripts built around MY real story from my offer summary. Each script must be scene-by-scene with a "visual direction" and the exact spoken line for each scene. Make them expandable/collapsible so I can open one at a time.
+TAB 2 — Reel Scripts: At least 5 full scripts built around MY real story from my summary. Each script must be scene-by-scene with a visual direction and the exact spoken line for each scene. Make them expandable/collapsible.
 
 TAB 3 — Caption Templates: 3 full captions written as me — one story-led, one educational, one lifestyle. Ready to copy and use. Include a short note on when to use each one.
 
-TAB 4 — 30 Day Plan: All 30 days mapped out, grouped by week. Each day shows: content type, theme, content pillar, and call-to-action. Make each week expandable so it's easy to navigate.
+TAB 4 — 30 Day Plan: All 30 days mapped out, grouped by week. Each day shows: content type, theme, content pillar, and call-to-action. Make each week expandable.
 
-Use my story, my audience, and my background from everything I've shared — nothing generic. Write everything in a tone I'd naturally say out loud. Build it as one clean interactive artifact with working tabs.`,
-    note: "💡 Free plan users: if your first result looks basic or thin, that's normal — just send the refinement prompt in Step 6 one or two more times. Paid users on the latest model will usually get a strong result on the first go.",
+Use everything in my summary — nothing generic. Write in a tone I'd naturally say out loud. Build it now as one clean interactive artifact with working tabs.`,
+    note: "💡 Free plan users: if your first result looks basic or thin, that's normal — just send the refinement prompt in Step 3 one or two more times. Paid users on the latest model will usually get a strong result on the first go.",
   },
   {
-    step: 6,
+    step: 3,
     title: "Refine and deepen your content system",
-    detail: "Send this prompt after your first artifact is generated. It closes the quality gap and makes everything more specific to your actual life — this is the step that takes it from good to great.",
+    detail: "Send this prompt after your artifact is generated. It makes everything more specific to your actual life — this is the step that takes it from good to great.",
     icon: "✨",
     prompt: `This is a great start. Now go deeper and rewrite the full artifact with these improvements:
 
@@ -146,7 +113,7 @@ Use my story, my audience, and my background from everything I've shared — not
 Rewrite the full artifact now with all of these improvements applied.`,
   },
   {
-    step: 7,
+    step: 4,
     title: "Save it and keep building",
     detail: "Once Claude generates your system, ask it to save the key details to its memory so every future chat picks up where you left off. You can then come back anytime to get new scripts, refine your offer, or build out new parts of your business.",
     icon: "💾",
